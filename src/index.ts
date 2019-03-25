@@ -35,6 +35,7 @@ class JaguarLandRoverAccessory {
   batteryService: any;
   lockService: any;
   preconditioningService: any;
+  chargingService: any;
 
   constructor(log: any, config: any) {
     this.log = log;
@@ -98,11 +99,34 @@ class JaguarLandRoverAccessory {
       .getCharacteristic(Characteristic.TemperatureDisplayUnits)
       .on("get", callbackify(this.getTemperatureDisplayUnits));
     this.preconditioningService = preconditioningService;
+
+    const chargingService = new Service.Outlet(
+      `${this.name} Charger`,
+      "vehicle",
+    );
+    chargingService
+      .getCharacteristic(Characteristic.On)
+      .on("get", callbackify(this.getChargerOutletOnOff))
+      .on("set", callbackify(this.setChargerOutletOnOff));
+    chargingService
+      .getCharacteristic(Characteristic.OutletInUse)
+      .on("get", callbackify(this.getChargerOutletInUse));
+    this.chargingService = chargingService;
   }
 
   getServices() {
-    const { batteryService, lockService, preconditioningService } = this;
-    return [batteryService, lockService, preconditioningService];
+    const {
+      batteryService,
+      lockService,
+      preconditioningService,
+      chargingService,
+    } = this;
+    return [
+      batteryService,
+      lockService,
+      preconditioningService,
+      chargingService,
+    ];
   }
 
   //
@@ -206,14 +230,6 @@ class JaguarLandRoverAccessory {
     } else {
       await this.incontrol.startPreconditioning(this.targetTemperature);
     }
-
-    // We succeeded, so update the "current" state as well.
-    // We need to update the current state "later" because Siri can't
-    // handle receiving the change event inside the same "set target state"
-    // response.
-    await wait(1);
-
-    return state;
   };
 
   getCurrentTemperature = async () => {
@@ -252,5 +268,39 @@ class JaguarLandRoverAccessory {
 
   getTemperatureDisplayUnits = async () => {
     return Characteristic.TemperatureDisplayUnits.CELSIUS;
+  };
+
+  //
+  // Charger
+  //
+
+  getChargerOutletOnOff = async () => {
+    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const chargingStatus = vehicleStatus.EV_CHARGING_STATUS;
+
+    return chargingStatus === "CHARGING";
+  };
+
+  setChargerOutletOnOff = async state => {
+    const { log } = this;
+    const chargerConnected = await this.getChargerOutletInUse();
+
+    log("Turning charger outlet", state ? "on" : "off");
+    if (state && !chargerConnected) {
+      log("Charging cable is not connected. Turning off.");
+      await wait(1);
+      this.chargingService.setCharacteristic(Characteristic.On, false);
+    } else if (state) {
+      this.incontrol.startCharging();
+    } else {
+      this.incontrol.stopCharging();
+    }
+  };
+
+  getChargerOutletInUse = async () => {
+    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const chargingMethod = vehicleStatus.EV_CHARGING_METHOD;
+
+    return chargingMethod === "WIRED";
   };
 }

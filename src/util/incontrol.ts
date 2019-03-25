@@ -358,4 +358,8 @@ export class InControlService {
     ];
     return this.startStopPreconditioning(serviceParameters);
   };
+
+  startCharging = async () => {};
+
+  stopCharging = async () => {};
 }
