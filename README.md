@@ -24,7 +24,7 @@ Example config.json:
 - `lowBatteryThresold` defines the battery level below which the battery is considered to be low.
   Defaults to 25% if the value is not specified.
 - `targetTemperature` define the default target temperature (in &#8451;) when preconditioning the vehicle.
-  Defaults to 21&#8451; if the value is not specified
+  Defaults to 22&#8451; if the value is not specified
 
 Exposes:
 

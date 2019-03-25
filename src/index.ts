@@ -43,7 +43,7 @@ class JaguarLandRoverAccessory {
     this.vin = config["vin"];
     this.waitMinutes = config["waitMinutes"] || 1; // default to one minute.
     this.lowBatteryThreshold = config["lowBatteryThreshold"] || 25;
-    this.targetTemperature = config["targetTemperature"] || 21;
+    this.targetTemperature = config["targetTemperature"] || 22;
     this.coolingThresholdTemperature =
       config["coolingThresholdTemperature"] || 20;
     this.incontrol = new InControlService(
