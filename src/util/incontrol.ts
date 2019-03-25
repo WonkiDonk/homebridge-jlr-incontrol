@@ -11,6 +11,7 @@ type Authentication = {
   tokenType: string;
   isDeviceRegistered: boolean;
   userId: string;
+  validUntil: Date;
 };
 
 type LockUnlockOperation = {
@@ -80,11 +81,18 @@ export class InControlService {
     }
   };
 
+  private invalidateSessionIfExpired = (): void => {
+    if (this.auth && this.auth.validUntil.getSeconds() < Date.now())
+      this.auth = undefined;
+  };
+
   private getSession = async (): Promise<Authentication> => {
     // Use a mutex to prevent multiple logins happening in parallel.
     const unlock = await lock("getSession", 20000);
 
     try {
+      this.invalidateSessionIfExpired();
+
       if (this.auth) {
         this.log("Getting active session");
         return this.auth;
@@ -138,6 +146,9 @@ export class InControlService {
 
     this.log("Got an authentication token.");
 
+    const validUntil = new Date();
+    validUntil.setSeconds(validUntil.getSeconds() + expires_in);
+
     return {
       accessToken: access_token,
       authorizationToken: authorization_token,
@@ -146,6 +157,7 @@ export class InControlService {
       tokenType: token_type,
       isDeviceRegistered: false,
       userId: "",
+      validUntil: validUntil,
     };
   };
 

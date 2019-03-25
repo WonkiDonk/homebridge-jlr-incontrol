@@ -77,7 +77,7 @@ If you use the example above, you would gain Siri commands like:
 
 - _"Open the I-PACE"_ (unlock the **I-PACE**)
 - _"Open the Range Rover"_ (unlock the **Range Rover**)
-- _"Turn on the I-PACE"_ (pre-condition **on the I-PACE**)
+- _"Turn on the I-PACE Preconditioning"_ (pre-condition **on the I-PACE**)
 
 ## Development
 
