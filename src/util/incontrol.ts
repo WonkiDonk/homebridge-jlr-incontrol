@@ -82,8 +82,8 @@ export class InControlService {
   };
 
   private invalidateSessionIfExpired = (): void => {
-    if (this.auth && this.auth.validUntil.getSeconds() < Date.now()) {
-      this.log("Current session expired");
+    if (this.auth && this.auth.validUntil < new Date()) {
+      this.log("Current session expired", this.auth.validUntil.toUTCString());
       this.auth = undefined;
     }
   };
