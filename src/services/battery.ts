@@ -16,7 +16,6 @@ export class HomeKitBatteryService extends HomeKitService {
     super(log, incontrol, Characteristic);
 
     this.lowBatteryThreshold = lowBatteryThreshold || 25;
-    this.incontrol = incontrol;
 
     const batteryService = new Service.BatteryService(name, "vehicle");
     batteryService

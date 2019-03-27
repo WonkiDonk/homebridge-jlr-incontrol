@@ -175,3 +175,53 @@ export interface VehicleStatus {
   WINDOW_REAR_LEFT_STATUS: string;
   WINDOW_REAR_RIGHT_STATUS: string;
 }
+
+type VehicleService = {
+  serviceType: string;
+  vehicleCapable: boolean;
+  serviceEnabled: boolean;
+};
+
+type VehicleCapability = {
+  capability: string;
+  capabilityClass: string;
+};
+
+export interface VehicleAttributes {
+  engineCode: string;
+  seatsQuantity: number;
+  exteriorColorName: string;
+  exteriorCode: string;
+  interiorColorName: string;
+  interiorCode: string;
+  tyreDimensionCode: string;
+  tyreInflationPressureLightCode: any;
+  tyreInflationPressureHeavyCode: any;
+  fuelType: any;
+  fuelTankVolume: any;
+  grossWeight: number;
+  modelYear: number;
+  constructionDate: any;
+  deliveryDate: any;
+  numberOfDoors: number;
+  country: string;
+  registrationNumber: string;
+  carLocatorMapDistance: any;
+  vehicleBrand: string;
+  vehicleType: string;
+  vehicleTypeCode: string;
+  bodyType: string;
+  gearboxCode: string;
+  availableServices: VehicleService[];
+  timeFullyAccessible: any;
+  timePartiallyAccessible: any;
+  subscriptionType: any;
+  capabilities: VehicleCapability[];
+  nickname: string;
+  telematicsDevice: {
+    serialNumber: string;
+    imei: string;
+  };
+  deviceState: string;
+  roofType: string;
+}

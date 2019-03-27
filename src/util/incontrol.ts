@@ -1,4 +1,8 @@
-import { VehicleStatusResponse, VehicleStatus } from "./types";
+import {
+  VehicleStatusResponse,
+  VehicleStatus,
+  VehicleAttributes,
+} from "./types";
 import { lock } from "./mutex";
 
 const rpn = require("request-promise-native");
@@ -336,7 +340,7 @@ export class InControlService {
     );
   };
 
-  getVehicleAttributes = async () => {
+  getVehicleAttributes = async (): Promise<VehicleAttributes> => {
     return await this.getVehicleInformation("attributes");
   };
 
@@ -345,7 +349,7 @@ export class InControlService {
       "status",
     );
 
-    var vehicleStatus: VehicleStatus = {};
+    let vehicleStatus: VehicleStatus = {};
 
     response.vehicleStatus.map(kvp => (vehicleStatus[kvp.key] = kvp.value));
 

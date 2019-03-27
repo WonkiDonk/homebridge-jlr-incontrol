@@ -1,10 +1,10 @@
 import { InControlService } from "../util/incontrol";
 
 export abstract class HomeKitService {
-  protected log: Function;
-  protected incontrol: InControlService;
+  protected readonly Characteristic: any;
+  protected readonly incontrol: InControlService;
+  protected readonly log: Function;
   protected service: any;
-  protected Characteristic: any;
 
   constructor(log: Function, incontrol: InControlService, Characteristic: any) {
     this.log = log;
