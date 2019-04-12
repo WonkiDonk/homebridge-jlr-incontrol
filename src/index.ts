@@ -6,7 +6,6 @@ import { HomeKitLockService } from "./services/lock";
 import { HomeKitPreconditioningService } from "./services/preconditioning";
 import { HomeKitChargerService } from "./services/charger";
 import { HomeKitInformationService } from "./services/info";
-import callbackify from "./util/callbackify";
 
 let Service: any, Characteristic: any;
 
@@ -33,14 +32,6 @@ class JaguarLandRoverAccessory {
       config["deviceId"],
       config["vin"],
       config["pin"],
-    );
-
-    var svc = new HomeKitInformationService(
-      name,
-      log,
-      incontrol,
-      Service,
-      Characteristic,
     );
 
     this.homeKitServices = [

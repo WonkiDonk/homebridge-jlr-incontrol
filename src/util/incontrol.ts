@@ -86,9 +86,18 @@ export class InControlService {
   };
 
   private invalidateSessionIfExpired = (): void => {
-    if (this.auth && this.auth.validUntil < new Date()) {
-      this.log("Current session expired", this.auth.validUntil.toUTCString());
-      this.auth = undefined;
+    if (this.auth) {
+      this.log(
+        "Current session valid until",
+        this.auth.validUntil.toUTCString(),
+      );
+
+      if (this.auth.validUntil < new Date()) {
+        this.log("Current session expired");
+        this.auth = undefined;
+      }
+    } else {
+      this.log("No existing session");
     }
   };
 
@@ -117,12 +126,12 @@ export class InControlService {
   };
 
   private authenticate = async (): Promise<Authentication> => {
-    const { username, password, auth, deviceId } = this;
+    const { username, password, auth, deviceId, log } = this;
 
     // Return cached value if we have one.
     if (auth) return auth;
 
-    this.log("Authenticating with InControl API using credentials");
+    log("Authenticating with InControl API using credentials");
 
     const headers = {
       "Content-Type": "application/json",
@@ -150,10 +159,12 @@ export class InControlService {
       token_type,
     } = result;
 
-    this.log("Got an authentication token.");
+    log("Got an authentication token.");
 
     const validUntil = new Date();
-    validUntil.setSeconds(validUntil.getSeconds() + expires_in);
+    validUntil.setSeconds(validUntil.getUTCSeconds() + Number(expires_in));
+
+    log("Authentication token valid until", validUntil.toUTCString());
 
     return {
       accessToken: access_token,
