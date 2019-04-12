@@ -119,6 +119,12 @@ export class HomeKitPreconditioningService extends HomeKitService {
 
     this.targetTemperature = state;
 
+    // We succeeded, so update the "current" state as well.
+    // We need to update the current state "later" because Siri can't
+    // handle receiving the change event inside the same "set target state"
+    // response.
+    await wait(1);
+
     // if we're currently preconditioning, then send the update to the car
     if (
       (await this.getCurrentHeatingCoolingState()) !==
@@ -128,13 +134,7 @@ export class HomeKitPreconditioningService extends HomeKitService {
         this.Characteristic.TargetHeatingCoolingState.AUTO,
       );
 
-    // We succeeded, so update the "current" state as well.
-    // We need to update the current state "later" because Siri can't
-    // handle receiving the change event inside the same "set target state"
-    // response.
-    await wait(1);
-
-    return this.Characteristic.TargetHeatingCoolingState.AUTO;
+    return state;
   };
 
   getTemperatureDisplayUnits = async () => {
