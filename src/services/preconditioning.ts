@@ -82,10 +82,10 @@ export class HomeKitPreconditioningService extends HomeKitService {
   setTargetHeatingCoolingState = async state => {
     this.log("Setting heating cooling state to", state);
 
-    if (state === this.Characteristic.CurrentHeatingCoolingState.OFF) {
-      await this.incontrol.stopPreconditioning();
-    } else {
+    if (state != this.Characteristic.CurrentHeatingCoolingState.OFF) {
       await this.incontrol.startPreconditioning(this.targetTemperature);
+    } else {
+      await this.incontrol.stopPreconditioning();
     }
 
     // We succeeded, so update the "current" state as well.
