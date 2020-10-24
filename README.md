@@ -68,7 +68,8 @@ distinguished by their unique VIN numbers:
           "password": "foobar",
           "pin": 1234,
           "deviceId": "69df52b-0c86-49eb-b115-de789fd4400d",
-          "targetTemperature": 18
+          "targetTemperature": 18,
+          "disableEV": true
         }
       ]
     }
