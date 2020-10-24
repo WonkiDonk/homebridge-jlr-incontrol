@@ -9,7 +9,7 @@ import { HomeKitInformationService } from "./services/info";
 
 let Service: any, Characteristic: any;
 
-export default function(homebridge: any) {
+export default function (homebridge: any) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
 
@@ -33,18 +33,11 @@ class JaguarLandRoverAccessory {
       config["vin"],
       config["pin"],
     );
+    const disableEV = config["disableEV"] || false
 
     this.homeKitServices = [
       new HomeKitInformationService(
         name,
-        log,
-        incontrol,
-        Service,
-        Characteristic,
-      ),
-      new HomeKitBatteryService(
-        name,
-        config["lowBatteryThreshold"],
         log,
         incontrol,
         Service,
@@ -60,7 +53,17 @@ class JaguarLandRoverAccessory {
         Service,
         Characteristic,
       ),
-      new HomeKitChargerService(name, log, incontrol, Service, Characteristic),
+      ...(disableEV ? [] : [
+        new HomeKitBatteryService(
+          name,
+          config["lowBatteryThreshold"],
+          log,
+          incontrol,
+          Service,
+          Characteristic,
+        ),
+        new HomeKitChargerService(name, log, incontrol, Service, Characteristic)
+      ])
     ];
   }
 
