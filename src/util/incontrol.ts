@@ -77,11 +77,6 @@ export class InControlService {
       };
       return await rpn(request);
     } catch (error) {
-      if (typeof error === "string") {
-        throw new Error(error);
-      }
-
-      throw error;
     }
   };
 
@@ -260,7 +255,7 @@ export class InControlService {
 
     var response = await this.sendRequest(
       "POST",
-      `https://if9.prod-row.jlrmotor.com/if9/jlr/vehicles/${vin}/users/${auth.userid}/authenticate`,
+      `https://if9.prod-row.jlrmotor.com/if9/jlr/vehicles/${vin}/users/${auth.userId}/authenticate`,
       headers,
       json,
     );

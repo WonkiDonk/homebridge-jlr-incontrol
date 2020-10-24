@@ -82,19 +82,11 @@ export class HomeKitPreconditioningService extends HomeKitService {
   setTargetHeatingCoolingState = async state => {
     this.log("Setting heating cooling state to", state);
 
-    if (state === this.Characteristic.CurrentHeatingCoolingState.OFF) {
-      await this.incontrol.stopPreconditioning();
+    if (state === this.Characteristic.TargetHeatingCoolingState.OFF) {
+      await this.turnPreconditioningOff();
     } else {
-      await this.incontrol.startPreconditioning(this.targetTemperature);
+      await this.turnPreconditioningOn();
     }
-
-    // We succeeded, so update the "current" state as well.
-    // We need to update the current state "later" because Siri can't
-    // handle receiving the change event inside the same "set target state"
-    // response.
-    await wait(1);
-
-    return state;
   };
 
   getCurrentTemperature = async () => {
@@ -142,4 +134,45 @@ export class HomeKitPreconditioningService extends HomeKitService {
 
     return this.Characteristic.TemperatureDisplayUnits.CELSIUS;
   };
+
+  private turnPreconditioningOn = async () => {
+    this.log("Starting preconditioning");
+
+    // We succeeded, so update the "current" state as well.
+    // We need to update the current state "later" because Siri can't
+    // handle receiving the change event inside the same "set target state"
+    // response.
+    await wait(1);
+
+    const climateOnState =
+      this.targetTemperature < this.coolingThresholdTemperature
+        ? this.Characteristic.CurrentHeatingCoolingState.COOL
+        : this.Characteristic.CurrentHeatingCoolingState.HEAT;
+
+    this.log("Setting CurrentHeatingCoolingState to", climateOnState)
+    this.service.setCharacteristic(
+      this.Characteristic.CurrentHeatingCoolingState,
+      climateOnState,
+    );
+
+    await this.incontrol.startPreconditioning(this.targetTemperature);
+  }
+
+  private turnPreconditioningOff = async () => {
+    this.log("Stopping preconditioning");
+
+    // We succeeded, so update the "current" state as well.
+    // We need to update the current state "later" because Siri can't
+    // handle receiving the change event inside the same "set target state"
+    // response.
+    await wait(1);
+
+    this.log("Setting CurrentHeatingCoolingState to", this.Characteristic.CurrentHeatingCoolingState.OFF)
+    this.service.setCharacteristic(
+      this.Characteristic.CurrentHeatingCoolingState,
+      this.Characteristic.CurrentHeatingCoolingState.OFF,
+    );
+
+    await this.incontrol.stopPreconditioning();
+  }
 }

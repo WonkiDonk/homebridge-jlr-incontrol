@@ -1,6 +1,6 @@
 {
   "name": "homebridge-jlr-incontrol",
-  "version": "0.4.0",
+  "version": "0.6.10",
   "description": "Jaguar Land Rover InControl support for Homebridge: https://github.com/nfarina/homebridge",
   "license": "ISC",
   "keywords": [
