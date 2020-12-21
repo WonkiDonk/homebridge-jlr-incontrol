@@ -1,72 +1,42 @@
 require("@babel/polyfill");
-import { InControlService } from "./util/incontrol";
-import { HomeKitService } from "./services/base";
-import { HomeKitBatteryService } from "./services/battery";
-import { HomeKitLockService } from "./services/lock";
-import { HomeKitPreconditioningService } from "./services/preconditioning";
-import { HomeKitChargerService } from "./services/charger";
-import { HomeKitInformationService } from "./services/info";
+import { API, HAP } from "homebridge"
+import { JaguarLandRoverRemoteApi } from "./util/remote"
+import { myCredentials } from "./credentials.private"
+import { HomeKitBatteryService } from "./services/battery"
+import { HomeKitChargerService } from "./services/charger"
+import { HomeKitLockService } from "./services/lock"
+import { HomeKitPreconditioningService } from "./services/preconditioning"
 
-let Service: any, Characteristic: any;
+let hap: HAP;
 
-export default function (homebridge: any) {
-  Service = homebridge.hap.Service;
-  Characteristic = homebridge.hap.Characteristic;
+export default function (homebridge: API) {
+  hap = homebridge.hap
 
   homebridge.registerAccessory(
     "homebridge-jlr-incontrol",
     "Jaguar Land Rover InControl",
-    JaguarLandRoverAccessory,
-  );
+    JaguarLandRoverAccessory
+  )
 }
 
 class JaguarLandRoverAccessory {
-  homeKitServices: HomeKitService[];
+  private readonly services: any[]
+  private readonly jlrRemoteApi: JaguarLandRoverRemoteApi
 
   constructor(log: any, config: any) {
-    const name = config["name"];
-    const incontrol = new InControlService(
-      log,
-      config["username"],
-      config["password"],
-      config["deviceId"],
-      config["vin"],
-      config["pin"],
-    );
+    const name = config["name"]
     const disableEV = config["disableEV"] || false
 
-    this.homeKitServices = [
-      new HomeKitInformationService(
-        name,
-        log,
-        incontrol,
-        Service,
-        Characteristic,
-      ),
-      new HomeKitLockService(name, log, incontrol, Service, Characteristic),
-      new HomeKitPreconditioningService(
-        name,
-        config["targetTemperature"],
-        config["coolingThresholdTemperature"],
-        log,
-        incontrol,
-        Service,
-        Characteristic,
-      ),
+    this.jlrRemoteApi = new JaguarLandRoverRemoteApi(log, myCredentials)
+    this.services = [
+      new HomeKitLockService(name, log, this.jlrRemoteApi, hap.Service, hap.Characteristic).getService(),
+      new HomeKitPreconditioningService(name, 21, 18, log, this.jlrRemoteApi, hap.Service, hap.Characteristic).getService(),
       ...(disableEV ? [] : [
-        new HomeKitBatteryService(
-          name,
-          config["lowBatteryThreshold"],
-          log,
-          incontrol,
-          Service,
-          Characteristic,
-        ),
-        new HomeKitChargerService(name, log, incontrol, Service, Characteristic)
+        new HomeKitBatteryService(name, config["lowBatteryThreshold"], log, this.jlrRemoteApi, hap.Service, hap.Characteristic),
+        new HomeKitChargerService(name, log, this.jlrRemoteApi, hap.Service, hap.Characteristic)
       ])
-    ];
+    ]
   }
 
-  getServices = () =>
-    this.homeKitServices.map(homeKitService => homeKitService.getService());
+  getServices = () => this.services
 }

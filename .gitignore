@@ -1,7 +1,6 @@
 node_modules/
 dist/
+scripts/
+*.private.ts
 package-lock.json
 .DS_Store
-src/test.ts
-deploy-to-dev.sh
-deploydev.sh

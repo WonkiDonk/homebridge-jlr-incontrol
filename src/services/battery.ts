@@ -1,5 +1,5 @@
-import { InControlService } from "../util/incontrol";
 import { HomeKitService } from "./base";
+import { JaguarLandRoverRemoteApi } from "../util/remote";
 import callbackify from "../util/callbackify";
 
 export class HomeKitBatteryService extends HomeKitService {
@@ -9,11 +9,11 @@ export class HomeKitBatteryService extends HomeKitService {
     name: string,
     lowBatteryThreshold: number | undefined,
     log: Function,
-    incontrol: InControlService,
+    jlrRemoteApi: JaguarLandRoverRemoteApi,
     Service: any,
     Characteristic: any,
   ) {
-    super(log, incontrol, Characteristic);
+    super(log, jlrRemoteApi, Characteristic);
 
     this.lowBatteryThreshold = lowBatteryThreshold || 25;
 
@@ -33,7 +33,7 @@ export class HomeKitBatteryService extends HomeKitService {
   getBatteryLevel = async (): Promise<number> => {
     this.log("Getting battery level");
 
-    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const vehicleStatus = await this.jlrRemoteApi.getVehicleStatus();
     const chargeLevel = vehicleStatus.EV_STATE_OF_CHARGE;
 
     return chargeLevel;
@@ -42,7 +42,7 @@ export class HomeKitBatteryService extends HomeKitService {
   getChargingState = async (): Promise<any> => {
     this.log("Getting charging state.");
 
-    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const vehicleStatus = await this.jlrRemoteApi.getVehicleStatus();
     const chargingStatus = vehicleStatus.EV_CHARGING_STATUS;
 
     return chargingStatus === "CHARGING"

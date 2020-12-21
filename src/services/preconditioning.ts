@@ -1,5 +1,5 @@
-import { InControlService } from "../util/incontrol";
 import { HomeKitService } from "./base";
+import { JaguarLandRoverRemoteApi } from "../util/remote";
 import callbackify from "../util/callbackify";
 import { wait } from "../util/wait";
 
@@ -14,11 +14,11 @@ export class HomeKitPreconditioningService extends HomeKitService {
     targetTemperature: number | undefined,
     coolingThresholdTemperature: number | undefined,
     log: Function,
-    incontrol: InControlService,
+    jlrRemoteApi: JaguarLandRoverRemoteApi, 
     Service: any,
     Characteristic: any,
   ) {
-    super(log, incontrol, Characteristic);
+    super(log, jlrRemoteApi, Characteristic);
 
     this.targetTemperature = targetTemperature || 22;
     this.coolingThresholdTemperature = coolingThresholdTemperature || 20;
@@ -50,7 +50,7 @@ export class HomeKitPreconditioningService extends HomeKitService {
   getCurrentHeatingCoolingState = async () => {
     this.log("Getting current heating/cooling state");
 
-    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const vehicleStatus = await this.jlrRemoteApi.getVehicleStatus();
     const climateStatus = vehicleStatus.CLIMATE_STATUS_OPERATING_STATUS;
 
     const climateOnState =
@@ -66,7 +66,7 @@ export class HomeKitPreconditioningService extends HomeKitService {
   getTargetHeatingCoolingState = async () => {
     this.log("Getting target heating/cooling state");
 
-    const vehicleStatus = await this.incontrol.getVehicleStatus();
+    const vehicleStatus = await this.jlrRemoteApi.getVehicleStatus();
     const climateStatus = vehicleStatus.CLIMATE_STATUS_OPERATING_STATUS;
 
     const climateOnState =
@@ -155,7 +155,7 @@ export class HomeKitPreconditioningService extends HomeKitService {
       climateOnState,
     );
 
-    await this.incontrol.startPreconditioning(this.targetTemperature);
+    await this.jlrRemoteApi.startPreconditioning(this.targetTemperature);
   }
 
   private turnPreconditioningOff = async () => {
@@ -173,6 +173,6 @@ export class HomeKitPreconditioningService extends HomeKitService {
       this.Characteristic.CurrentHeatingCoolingState.OFF,
     );
 
-    await this.incontrol.stopPreconditioning();
+    await this.jlrRemoteApi.stopPreconditioning();
   }
 }

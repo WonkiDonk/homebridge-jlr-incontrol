@@ -3,6 +3,8 @@ import {
   VehicleStatus,
   VehicleAttributes,
 } from "./types";
+import { Credentials } from "./credentials"
+import { EmptyVehicleStatus } from "./emptyVehicleStatus"
 import { lock } from "./mutex";
 
 const rpn = require("request-promise-native");
@@ -23,13 +25,7 @@ type LockUnlockOperation = {
   tokenType: string;
 };
 
-export class InControlService {
-  private log: any;
-  private username: string;
-  private password: string;
-  private deviceId: string;
-  private vin: string;
-  private pin: string;
+export class JaguarLandRoverRemoteApi {
   private auth: Authentication | undefined;
   private UnlockVehicleOperation: LockUnlockOperation = {
     name: "unlock",
@@ -45,20 +41,9 @@ export class InControlService {
   };
 
   constructor(
-    log: any,
-    username: string,
-    password: string,
-    deviceId: string,
-    vin: string,
-    pin: string,
-  ) {
-    this.log = log;
-    this.username = username;
-    this.password = password;
-    this.deviceId = deviceId;
-    this.vin = vin;
-    this.pin = pin;
-  }
+    private log: any,
+    private credentials: Credentials
+  ) { }
 
   private sendRequest = async (
     method: string,
@@ -77,6 +62,11 @@ export class InControlService {
       };
       return await rpn(request);
     } catch (error) {
+      if (typeof error === "string") {
+        throw new Error(error);
+      }
+
+      throw error;
     }
   };
 
@@ -121,7 +111,8 @@ export class InControlService {
   };
 
   private authenticate = async (): Promise<Authentication> => {
-    const { username, password, auth, deviceId, log } = this;
+    const { username, password, deviceId } = this.credentials;
+    const { auth, log } = this;
 
     // Return cached value if we have one.
     if (auth) return auth;
@@ -174,12 +165,18 @@ export class InControlService {
   };
 
   private registerDevice = async (): Promise<boolean> => {
-    const { username, auth, deviceId } = this;
+    const { username, deviceId } = this.credentials;
+    const { auth } = this;
 
     // Return cached value if we have one.
     if (auth && auth.isDeviceRegistered) return auth.isDeviceRegistered;
 
-    this.log("Registering device", deviceId);
+    if (!auth) {
+      this.log("Could not register device as not authenticated.")
+      return false;
+    }
+
+    this.log("Registering device");
     const headers = {
       "Content-Type": "application/json",
       "X-Device-Id": deviceId,
@@ -207,12 +204,18 @@ export class InControlService {
   };
 
   private getUserId = async (): Promise<string> => {
-    const { username, auth, deviceId } = this;
+    const { username, deviceId } = this.credentials;
+    const { auth } = this;
 
     // Return cached value if we have one.
     if (auth && auth.userId) return auth.userId;
 
-    this.log("Getting user id", username);
+    if (!auth) {
+      this.log("Could not get user identifier as not authenticated.")
+      return "";
+    }
+
+    this.log("Getting user id");
     const headers = {
       Accept: "application/vnd.wirelesscar.ngtp.if9.User-v3+json",
       Authorization: `Bearer ${auth.accessToken}`,
@@ -228,7 +231,7 @@ export class InControlService {
     );
 
     const userId = result.userId;
-    this.log("Log in user id", userId);
+    this.log("Log in user id");
 
     return userId;
   };
@@ -237,7 +240,7 @@ export class InControlService {
     tokenType: string,
     pin: string,
   ): Promise<string> => {
-    const { vin, deviceId } = this;
+    const { vin, deviceId } = this.credentials
     const auth = await this.getSession();
 
     this.log("Getting command token", tokenType);
@@ -266,9 +269,15 @@ export class InControlService {
   private lockUnlockVehicle = async (
     operation: LockUnlockOperation,
   ): Promise<any> => {
-    const { pin } = this;
+    const { pin } = this.credentials;
     const token = await this.getCommandToken(operation.tokenType, pin);
-    const { vin, deviceId, auth } = this;
+    const { vin, deviceId } = this.credentials;
+    const { auth } = this;
+
+    if (!auth) {
+      this.log("Could not lock or unlock vehicle as not authenticated.")
+      return false;
+    }
 
     const headers = {
       Accept: "*/*",
@@ -295,7 +304,13 @@ export class InControlService {
   ): Promise<any> => {
     const pin = this.getLastFourOfVin();
     const token = await this.getCommandToken(tokenType, pin);
-    const { vin, deviceId, auth } = this;
+    const { vin, deviceId } = this.credentials;
+    const { auth } = this;
+
+    if (!auth) {
+      this.log("Could not send vehicle command as not authenticated.")
+      return false;
+    }
 
     const headers = {
       Accept: "application/vnd.wirelesscar.ngtp.if9.ServiceStatus-v5+json",
@@ -318,19 +333,19 @@ export class InControlService {
   };
 
   getLastFourOfVin = (): string => {
-    const { vin } = this;
+    const { vin } = this.credentials;
     return vin.slice(vin.length - 4);
   };
 
   private getVehicleInformation = async (name: string): Promise<any> => {
-    const { vin, deviceId } = this;
+    const { vin, deviceId } = this.credentials;
     const auth = await this.getSession();
 
-    this.log("Getting vehicle", name, vin);
+    this.log("Getting vehicle");
 
     const headers = {
       Authorization: `Bearer ${auth.accessToken}`,
-      Accept: InControlService.vehicleInformationAccepts[name],
+      Accept: JaguarLandRoverRemoteApi.vehicleInformationAccepts[name],
       "Content-Type": "application/json",
       "X-Device-Id": deviceId,
     };
@@ -351,7 +366,7 @@ export class InControlService {
       "status",
     );
 
-    let vehicleStatus: VehicleStatus = {};
+    let vehicleStatus: VehicleStatus = EmptyVehicleStatus;
 
     response.vehicleStatus.map(kvp => (vehicleStatus[kvp.key] = kvp.value));
 
