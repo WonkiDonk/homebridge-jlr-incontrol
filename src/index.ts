@@ -1,13 +1,12 @@
 require("@babel/polyfill")
-import { AccessoryConfig, API, HAP, HapCharacteristic } from "homebridge"
+import { AccessoryConfig, API, HAP } from "homebridge"
 import { Config } from "./util/config"
 import { JaguarLandRoverRemoteApi } from "./util/remote"
 import { HomeKitBatteryService } from "./services/battery"
 import { HomeKitChargerService } from "./services/charger"
 import { HomeKitLockService } from "./services/lock"
 import { HomeKitPreconditioningService } from "./services/preconditioning"
-import {Service} from "homebridge"
-import { Credentials } from "./util/credentials"
+import { Service } from "homebridge"
 
 let hap: HAP
 
@@ -17,6 +16,12 @@ export default function (homebridge: API) {
   homebridge.registerAccessory(
     "homebridge-jlr-incontrol",
     "Jaguar Land Rover InControl",
+    JaguarLandRoverAccessory
+  )
+
+  homebridge.registerAccessory(
+    "homebridge-jlr-incontrol",
+    "Jaguar Land Rover Remote",
     JaguarLandRoverAccessory
   )
 }

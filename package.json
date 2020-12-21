@@ -1,6 +1,6 @@
 {
   "name": "homebridge-jlr-incontrol",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Jaguar Land Rover Remote support for Homebridge: https://github.com/nfarina/homebridge",
   "license": "ISC",
   "keywords": [
