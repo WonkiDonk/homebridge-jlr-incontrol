@@ -1,227 +1,227 @@
 export interface VehicleStatusResponse {
-  vehicleStatus: KeyValuePair[];
+  vehicleStatus: KeyValuePair[]
 }
 
 type KeyValuePair = {
-  key: string;
-  value: string;
-};
+  key: string
+  value: string
+}
 
 export interface VehicleStatus {
-  BATTERY_STATUS: string;
-  BATTERY_VOLTAGE: number;
-  BRAKE_FLUID_WARN: string;
-  BRAZIL_EVENT_MODE: string;
-  CLIMATE_STATUS_FFH_REMAINING_RUNTIME: number;
-  CLIMATE_STATUS_OPERATING_STATUS: string;
-  CLIMATE_STATUS_REMAINING_RUNTIME: number;
-  CLIMATE_STATUS_TIMER_ACTIVATION_STATUS: boolean;
-  CLIMATE_STATUS_TIMER1_DAY: number;
-  CLIMATE_STATUS_TIMER1_HOUR: number;
-  CLIMATE_STATUS_TIMER1_MINUTE: number;
-  CLIMATE_STATUS_TIMER1_MONTH: number;
-  CLIMATE_STATUS_TIMER2_DAY: number;
-  CLIMATE_STATUS_TIMER2_HOUR: number;
-  CLIMATE_STATUS_TIMER2_MINUTE: number;
-  CLIMATE_STATUS_TIMER2_MONTH: number;
-  CLIMATE_STATUS_VENTING_TIME: number;
-  DISTANCE_TO_EMPTY_FUEL: number;
-  DOOR_BOOT_LOCK_STATUS: "LOCKED" | "UNLOCKED";
-  DOOR_BOOT_POSITION: "OPEN" | "CLOSED";
-  DOOR_ENGINE_HOOD_LOCK_STATUS: "LOCKED" | "UNLOCKED";
-  DOOR_ENGINE_HOOD_POSITION: "OPEN" | "CLOSED";
-  DOOR_FRONT_LEFT_LOCK_STATUS: "LOCKED" | "UNLOCKED";
-  DOOR_FRONT_LEFT_POSITION: "OPEN" | "CLOSED";
-  DOOR_FRONT_RIGHT_LOCK_STATUS: "LOCKED" | "UNLOCKED";
-  DOOR_FRONT_RIGHT_POSITION: "OPEN" | "CLOSED";
-  DOOR_IS_ALL_DOORS_LOCKED: "TRUE" | "FALSE";
-  DOOR_IS_BOOT_LOCKED: boolean;
-  DOOR_REAR_LEFT_LOCK_STATUS: "LOCKED" | "UNLOCKED";
-  DOOR_REAR_LEFT_POSITION: "OPEN" | "CLOSED";
-  DOOR_REAR_RIGHT_LOCK_STATUS: "LOCKED" | "UNLOCKED";
-  DOOR_REAR_RIGHT_POSITION: "OPEN" | "CLOSED";
-  DRV_SEAT_SECOND_ROW_INHIBITION: string;
-  DRV_SEAT_SECOND_ROW_STATUS: string;
-  DRV_SEAT_THIRD_ROW_INHIBITION: string;
-  DRV_SEAT_THIRD_ROW_STATUS: string;
-  ENG_COOLANT_LEVEL_WARN: string;
-  ENGINE_BLOCK: string;
-  ENGINE_COOLANT_TEMP: number;
-  EV_BATTERY_PRECONDITIONING_STATUS: string;
-  EV_CHARGE_NOW_SETTING: string;
-  EV_CHARGE_TYPE: string;
-  EV_CHARGING_METHOD: string; // WIRED = plugged in
-  EV_CHARGING_MODE_CHOICE: string;
-  EV_CHARGING_RATE_KM_PER_HOUR: number;
-  EV_CHARGING_RATE_MILES_PER_HOUR: number;
-  EV_CHARGING_RATE_SOC_PER_HOUR: string;
-  EV_CHARGING_STATUS: string;
-  EV_ENERGY_CONSUMED_LAST_CHARGE_KWH: number;
-  EV_IS_CHARGING: string;
-  EV_IS_PLUGGED_IN: string;
-  EV_IS_PRECONDITIONING: string;
-  EV_MINUTES_TO_BULK_CHARGED: number;
-  EV_MINUTES_TO_FULLY_CHARGED: number;
-  EV_NEXT_DEPARTURE_TIMER_DATE_DAY: number;
-  EV_NEXT_DEPARTURE_TIMER_DATE_MONTH: number;
-  EV_NEXT_DEPARTURE_TIMER_DATE_YEAR: number;
-  EV_NEXT_DEPARTURE_TIMER_IS_SET: boolean;
-  EV_NEXT_DEPARTURE_TIMER_TIME_HOUR: number;
-  EV_NEXT_DEPARTURE_TIMER_TIME_MINUTE: number;
-  EV_ONE_OFF_MAX_SOC_CHARGE_SETTING_CHOICE: string;
-  EV_PERMANENT_MAX_SOC_CHARGE_SETTING_CHOICE: string;
-  EV_PHEV_RANGE_COMBINED_KM: number;
-  EV_PHEV_RANGE_COMBINED_MILES: number;
-  EV_PRECONDITION_FUEL_FIRED_HEATER_SETTING: string;
-  EV_PRECONDITION_OPERATING_STATUS: string;
-  EV_PRECONDITION_PRIORITY_SETTING: string;
-  EV_PRECONDITION_REMAINING_RUNTIME_MINUTES: number;
-  EV_PRECONDITIONING_MODE: number;
-  EV_RANGE_COMFORTx10: number;
-  EV_RANGE_ECOx10: number;
-  EV_RANGE_GET_ME_HOMEx10: number;
-  EV_RANGE_ON_BATTERY_KM: number;
-  EV_RANGE_ON_BATTERY_MILES: number;
-  EV_RANGE_PREDICT_STATUS: string;
-  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD1: number;
-  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD2: number;
-  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD3: number;
-  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD4: number;
-  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD5: number;
-  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD6: number;
-  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD7: number;
-  EV_RANGE_VSC_HV_ENERGY_ASCENTx10: number;
-  EV_RANGE_VSC_HV_ENERGY_DESCENTx10: number;
-  EV_RANGE_VSC_HV_ENERGY_TIME_PENx100: number;
-  EV_RANGE_VSC_INITIAL_HV_BATT_ENERGYx100: number;
-  EV_RANGE_VSC_RANGE_MAP_REFACTR_COMF: number;
-  EV_RANGE_VSC_RANGE_MAP_REFACTR_ECO: number;
-  EV_RANGE_VSC_RANGE_MAP_REFACTR_GMH: number;
-  EV_RANGE_VSC_REGEN_ENERGY_AVAILABLEx100: number;
-  EV_RANGE_VSC_REGEN_ENERGY_FACTOR: number;
-  EV_RANGE_VSC_REVISED_HV_BATT_ENERGYx100: number;
-  EV_RANGE_VSC_VEH_ACCEL_FACTOR: number;
-  EV_STATE_OF_CHARGE: number;
-  EXT_BULB_STATUS_LEFT_TURN_ANY: number;
-  EXT_KILOMETERS_TO_SERVICE: number;
-  EXT_OIL_LEVEL_WARN: string;
-  FUEL_LEVEL_PERC: number;
-  IS_CAB_OPEN: string;
-  IS_CRASH_SITUATION: string;
-  IS_HEAD_LIGHTS_ON: string;
-  IS_PANIC_ALARM_TRIGGERED: string;
-  IS_SUNROOF_OPEN: string;
-  LATEST_COMPLETE_CONFIG_UPDATE: string;
-  ODOMETER: number;
-  ODOMETER_METER: number;
-  ODOMETER_METER_RESOLUTION: string;
-  ODOMETER_MILES: number;
-  ODOMETER_MILES_RESOLUTION: string;
-  PAS_SEAT_FIRST_ROW_INHIBITION: string;
-  PAS_SEAT_FIRST_ROW_STATUS: string;
-  PAS_SEAT_SECOND_ROW_INHIBITION: string;
-  PAS_SEAT_SECOND_ROW_STATUS: string;
-  PAS_SEAT_THIRD_ROW_INHIBITION: string;
-  PAS_SEAT_THIRD_ROW_STATUS: string;
-  PRIVACY_SWITCH: string;
-  SERVICE_MODE_START: string;
-  SERVICE_MODE_STOP: string;
-  SRS_STATUS: string;
-  THEFT_ALARM_STATUS: string;
-  TRANSPORT_MODE_START: string;
-  TRANSPORT_MODE_STOP: string;
-  TU_ACTIVATION_STATUS: string;
-  TU_STATUS_BUTTONS: string;
-  TU_STATUS_CAN: string;
-  TU_STATUS_CONFIG_VERSION: number;
-  TU_STATUS_CRASH_INPUT: string;
-  TU_STATUS_DAYS_SINCE_GNSS_FIX: number;
-  TU_STATUS_EXT_HANDSFREE: string;
-  TU_STATUS_EXT_POWER: string;
-  TU_STATUS_GNSS: string;
-  TU_STATUS_GNSS_ANTENNA: string;
-  TU_STATUS_GSM_EXT_ANTENNA: string;
-  TU_STATUS_GSM_MODEM: string;
-  TU_STATUS_HANDSET: string;
-  TU_STATUS_HW_VERSION: string;
-  TU_STATUS_IMEI: number;
-  TU_STATUS_INT_POWER: string;
-  TU_STATUS_INT_RTC: string;
-  TU_STATUS_MIC: string;
-  TU_STATUS_MOBILE_PHONE_CONNECTED: string;
-  TU_STATUS_POWER: string;
-  TU_STATUS_PRIMARY_CHARGE_PERCENT: number;
-  TU_STATUS_PRIMARY_VOLT: number;
-  TU_STATUS_SECONDARY_VOLT: number;
-  TU_STATUS_SERIAL_NUMBER: string;
-  TU_STATUS_SLEEP_CYCLES_START_TIME: string;
-  TU_STATUS_SPEAKER: string;
-  TU_STATUS_SW_VERSION_CONFIG: string;
-  TU_STATUS_SW_VERSION_MAIN: string;
-  TU_STATUS_SW_VERSION_SECONDARY: string;
-  TU_STATUS_USES_EXTERNAL_GNSS: string;
-  TYRE_PRESSURE_FRONT_LEFT: number;
-  TYRE_PRESSURE_FRONT_RIGHT: number;
-  TYRE_PRESSURE_REAR_LEFT: number;
-  TYRE_PRESSURE_REAR_RIGHT: number;
-  TYRE_STATUS_FRONT_LEFT: string;
-  TYRE_STATUS_FRONT_RIGHT: string;
-  TYRE_STATUS_REAR_LEFT: string;
-  TYRE_STATUS_REAR_RIGHT: string;
-  VEHICLE_STATE_TYPE: string;
-  WASHER_FLUID_WARN: string;
-  WINDOW_FRONT_LEFT_STATUS: string;
-  WINDOW_FRONT_RIGHT_STATUS: string;
-  WINDOW_REAR_LEFT_STATUS: string;
-  WINDOW_REAR_RIGHT_STATUS: string;
+  BATTERY_STATUS: string
+  BATTERY_VOLTAGE: number
+  BRAKE_FLUID_WARN: string
+  BRAZIL_EVENT_MODE: string
+  CLIMATE_STATUS_FFH_REMAINING_RUNTIME: number
+  CLIMATE_STATUS_OPERATING_STATUS: string
+  CLIMATE_STATUS_REMAINING_RUNTIME: number
+  CLIMATE_STATUS_TIMER_ACTIVATION_STATUS: boolean
+  CLIMATE_STATUS_TIMER1_DAY: number
+  CLIMATE_STATUS_TIMER1_HOUR: number
+  CLIMATE_STATUS_TIMER1_MINUTE: number
+  CLIMATE_STATUS_TIMER1_MONTH: number
+  CLIMATE_STATUS_TIMER2_DAY: number
+  CLIMATE_STATUS_TIMER2_HOUR: number
+  CLIMATE_STATUS_TIMER2_MINUTE: number
+  CLIMATE_STATUS_TIMER2_MONTH: number
+  CLIMATE_STATUS_VENTING_TIME: number
+  DISTANCE_TO_EMPTY_FUEL: number
+  DOOR_BOOT_LOCK_STATUS: "LOCKED" | "UNLOCKED"
+  DOOR_BOOT_POSITION: "OPEN" | "CLOSED"
+  DOOR_ENGINE_HOOD_LOCK_STATUS: "LOCKED" | "UNLOCKED"
+  DOOR_ENGINE_HOOD_POSITION: "OPEN" | "CLOSED"
+  DOOR_FRONT_LEFT_LOCK_STATUS: "LOCKED" | "UNLOCKED"
+  DOOR_FRONT_LEFT_POSITION: "OPEN" | "CLOSED"
+  DOOR_FRONT_RIGHT_LOCK_STATUS: "LOCKED" | "UNLOCKED"
+  DOOR_FRONT_RIGHT_POSITION: "OPEN" | "CLOSED"
+  DOOR_IS_ALL_DOORS_LOCKED: "TRUE" | "FALSE"
+  DOOR_IS_BOOT_LOCKED: boolean
+  DOOR_REAR_LEFT_LOCK_STATUS: "LOCKED" | "UNLOCKED"
+  DOOR_REAR_LEFT_POSITION: "OPEN" | "CLOSED"
+  DOOR_REAR_RIGHT_LOCK_STATUS: "LOCKED" | "UNLOCKED"
+  DOOR_REAR_RIGHT_POSITION: "OPEN" | "CLOSED"
+  DRV_SEAT_SECOND_ROW_INHIBITION: string
+  DRV_SEAT_SECOND_ROW_STATUS: string
+  DRV_SEAT_THIRD_ROW_INHIBITION: string
+  DRV_SEAT_THIRD_ROW_STATUS: string
+  ENG_COOLANT_LEVEL_WARN: string
+  ENGINE_BLOCK: string
+  ENGINE_COOLANT_TEMP: number
+  EV_BATTERY_PRECONDITIONING_STATUS: string
+  EV_CHARGE_NOW_SETTING: string
+  EV_CHARGE_TYPE: string
+  EV_CHARGING_METHOD: string // WIRED = plugged in
+  EV_CHARGING_MODE_CHOICE: string
+  EV_CHARGING_RATE_KM_PER_HOUR: number
+  EV_CHARGING_RATE_MILES_PER_HOUR: number
+  EV_CHARGING_RATE_SOC_PER_HOUR: string
+  EV_CHARGING_STATUS: string
+  EV_ENERGY_CONSUMED_LAST_CHARGE_KWH: number
+  EV_IS_CHARGING: string
+  EV_IS_PLUGGED_IN: string
+  EV_IS_PRECONDITIONING: string
+  EV_MINUTES_TO_BULK_CHARGED: number
+  EV_MINUTES_TO_FULLY_CHARGED: number
+  EV_NEXT_DEPARTURE_TIMER_DATE_DAY: number
+  EV_NEXT_DEPARTURE_TIMER_DATE_MONTH: number
+  EV_NEXT_DEPARTURE_TIMER_DATE_YEAR: number
+  EV_NEXT_DEPARTURE_TIMER_IS_SET: boolean
+  EV_NEXT_DEPARTURE_TIMER_TIME_HOUR: number
+  EV_NEXT_DEPARTURE_TIMER_TIME_MINUTE: number
+  EV_ONE_OFF_MAX_SOC_CHARGE_SETTING_CHOICE: string
+  EV_PERMANENT_MAX_SOC_CHARGE_SETTING_CHOICE: string
+  EV_PHEV_RANGE_COMBINED_KM: number
+  EV_PHEV_RANGE_COMBINED_MILES: number
+  EV_PRECONDITION_FUEL_FIRED_HEATER_SETTING: string
+  EV_PRECONDITION_OPERATING_STATUS: string
+  EV_PRECONDITION_PRIORITY_SETTING: string
+  EV_PRECONDITION_REMAINING_RUNTIME_MINUTES: number
+  EV_PRECONDITIONING_MODE: number
+  EV_RANGE_COMFORTx10: number
+  EV_RANGE_ECOx10: number
+  EV_RANGE_GET_ME_HOMEx10: number
+  EV_RANGE_ON_BATTERY_KM: number
+  EV_RANGE_ON_BATTERY_MILES: number
+  EV_RANGE_PREDICT_STATUS: string
+  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD1: number
+  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD2: number
+  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD3: number
+  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD4: number
+  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD5: number
+  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD6: number
+  EV_RANGE_VSC_HV_BATTERY_CONSUMPTION_SPD7: number
+  EV_RANGE_VSC_HV_ENERGY_ASCENTx10: number
+  EV_RANGE_VSC_HV_ENERGY_DESCENTx10: number
+  EV_RANGE_VSC_HV_ENERGY_TIME_PENx100: number
+  EV_RANGE_VSC_INITIAL_HV_BATT_ENERGYx100: number
+  EV_RANGE_VSC_RANGE_MAP_REFACTR_COMF: number
+  EV_RANGE_VSC_RANGE_MAP_REFACTR_ECO: number
+  EV_RANGE_VSC_RANGE_MAP_REFACTR_GMH: number
+  EV_RANGE_VSC_REGEN_ENERGY_AVAILABLEx100: number
+  EV_RANGE_VSC_REGEN_ENERGY_FACTOR: number
+  EV_RANGE_VSC_REVISED_HV_BATT_ENERGYx100: number
+  EV_RANGE_VSC_VEH_ACCEL_FACTOR: number
+  EV_STATE_OF_CHARGE: number
+  EXT_BULB_STATUS_LEFT_TURN_ANY: number
+  EXT_KILOMETERS_TO_SERVICE: number
+  EXT_OIL_LEVEL_WARN: string
+  FUEL_LEVEL_PERC: number
+  IS_CAB_OPEN: string
+  IS_CRASH_SITUATION: string
+  IS_HEAD_LIGHTS_ON: string
+  IS_PANIC_ALARM_TRIGGERED: string
+  IS_SUNROOF_OPEN: string
+  LATEST_COMPLETE_CONFIG_UPDATE: string
+  ODOMETER: number
+  ODOMETER_METER: number
+  ODOMETER_METER_RESOLUTION: string
+  ODOMETER_MILES: number
+  ODOMETER_MILES_RESOLUTION: string
+  PAS_SEAT_FIRST_ROW_INHIBITION: string
+  PAS_SEAT_FIRST_ROW_STATUS: string
+  PAS_SEAT_SECOND_ROW_INHIBITION: string
+  PAS_SEAT_SECOND_ROW_STATUS: string
+  PAS_SEAT_THIRD_ROW_INHIBITION: string
+  PAS_SEAT_THIRD_ROW_STATUS: string
+  PRIVACY_SWITCH: string
+  SERVICE_MODE_START: string
+  SERVICE_MODE_STOP: string
+  SRS_STATUS: string
+  THEFT_ALARM_STATUS: string
+  TRANSPORT_MODE_START: string
+  TRANSPORT_MODE_STOP: string
+  TU_ACTIVATION_STATUS: string
+  TU_STATUS_BUTTONS: string
+  TU_STATUS_CAN: string
+  TU_STATUS_CONFIG_VERSION: number
+  TU_STATUS_CRASH_INPUT: string
+  TU_STATUS_DAYS_SINCE_GNSS_FIX: number
+  TU_STATUS_EXT_HANDSFREE: string
+  TU_STATUS_EXT_POWER: string
+  TU_STATUS_GNSS: string
+  TU_STATUS_GNSS_ANTENNA: string
+  TU_STATUS_GSM_EXT_ANTENNA: string
+  TU_STATUS_GSM_MODEM: string
+  TU_STATUS_HANDSET: string
+  TU_STATUS_HW_VERSION: string
+  TU_STATUS_IMEI: number
+  TU_STATUS_INT_POWER: string
+  TU_STATUS_INT_RTC: string
+  TU_STATUS_MIC: string
+  TU_STATUS_MOBILE_PHONE_CONNECTED: string
+  TU_STATUS_POWER: string
+  TU_STATUS_PRIMARY_CHARGE_PERCENT: number
+  TU_STATUS_PRIMARY_VOLT: number
+  TU_STATUS_SECONDARY_VOLT: number
+  TU_STATUS_SERIAL_NUMBER: string
+  TU_STATUS_SLEEP_CYCLES_START_TIME: string
+  TU_STATUS_SPEAKER: string
+  TU_STATUS_SW_VERSION_CONFIG: string
+  TU_STATUS_SW_VERSION_MAIN: string
+  TU_STATUS_SW_VERSION_SECONDARY: string
+  TU_STATUS_USES_EXTERNAL_GNSS: string
+  TYRE_PRESSURE_FRONT_LEFT: number
+  TYRE_PRESSURE_FRONT_RIGHT: number
+  TYRE_PRESSURE_REAR_LEFT: number
+  TYRE_PRESSURE_REAR_RIGHT: number
+  TYRE_STATUS_FRONT_LEFT: string
+  TYRE_STATUS_FRONT_RIGHT: string
+  TYRE_STATUS_REAR_LEFT: string
+  TYRE_STATUS_REAR_RIGHT: string
+  VEHICLE_STATE_TYPE: string
+  WASHER_FLUID_WARN: string
+  WINDOW_FRONT_LEFT_STATUS: string
+  WINDOW_FRONT_RIGHT_STATUS: string
+  WINDOW_REAR_LEFT_STATUS: string
+  WINDOW_REAR_RIGHT_STATUS: string
 }
 
 type VehicleService = {
-  serviceType: string;
-  vehicleCapable: boolean;
-  serviceEnabled: boolean;
-};
+  serviceType: string
+  vehicleCapable: boolean
+  serviceEnabled: boolean
+}
 
 type VehicleCapability = {
-  capability: string;
-  capabilityClass: string;
-};
+  capability: string
+  capabilityClass: string
+}
 
 export interface VehicleAttributes {
-  engineCode: string;
-  seatsQuantity: number;
-  exteriorColorName: string;
-  exteriorCode: string;
-  interiorColorName: string;
-  interiorCode: string;
-  tyreDimensionCode: string;
-  tyreInflationPressureLightCode: any;
-  tyreInflationPressureHeavyCode: any;
-  fuelType: any;
-  fuelTankVolume: any;
-  grossWeight: number;
-  modelYear: number;
-  constructionDate: any;
-  deliveryDate: any;
-  numberOfDoors: number;
-  country: string;
-  registrationNumber: string;
-  carLocatorMapDistance: any;
-  vehicleBrand: string;
-  vehicleType: string;
-  vehicleTypeCode: string;
-  bodyType: string;
-  gearboxCode: string;
-  availableServices: VehicleService[];
-  timeFullyAccessible: any;
-  timePartiallyAccessible: any;
-  subscriptionType: any;
-  capabilities: VehicleCapability[];
-  nickname: string;
+  engineCode: string
+  seatsQuantity: number
+  exteriorColorName: string
+  exteriorCode: string
+  interiorColorName: string
+  interiorCode: string
+  tyreDimensionCode: string
+  tyreInflationPressureLightCode: any
+  tyreInflationPressureHeavyCode: any
+  fuelType: any
+  fuelTankVolume: any
+  grossWeight: number
+  modelYear: number
+  constructionDate: any
+  deliveryDate: any
+  numberOfDoors: number
+  country: string
+  registrationNumber: string
+  carLocatorMapDistance: any
+  vehicleBrand: string
+  vehicleType: string
+  vehicleTypeCode: string
+  bodyType: string
+  gearboxCode: string
+  availableServices: VehicleService[]
+  timeFullyAccessible: any
+  timePartiallyAccessible: any
+  subscriptionType: any
+  capabilities: VehicleCapability[]
+  nickname: string
   telematicsDevice: {
-    serialNumber: string;
-    imei: string;
-  };
-  deviceState: string;
-  roofType: string;
+    serialNumber: string
+    imei: string
+  }
+  deviceState: string
+  roofType: string
 }

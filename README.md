@@ -85,7 +85,7 @@ If you use the example above, you would gain Siri commands like:
 You can run Rollup in watch mode to automatically transpile code as you write it:
 
 ```sh
-  npm run dev
+  yarn dev
 ```
 
 ## Acknowledgements
