@@ -4,10 +4,11 @@ Jaguar Land Rover InControl plug in for [Homebridge](https://homebridge.io/).
 
 Example config.json:
 
+```json
     {
       "accessories": [
         {
-          "accessory": "Jaguar Land Rover InControl",
+          "accessory": "Jaguar Land Rover Remote",
           "name": "I-PACE",
           "vin": "1AAAAA111AA111111",
           "username": "foo@bar.uk",
@@ -19,12 +20,14 @@ Example config.json:
         }
       ]
     }
+```
 
-- `deviceId` needs to be a unique device identifier to identify your Homebridge.
+- `deviceId` needs to be a unique device identifier to identify your Homebridge. [Generate a unique value](https://www.uuidgenerator.net/) and put it here.
 - `lowBatteryThresold` defines the battery level below which the battery is considered to be low.
   Defaults to 25% if the value is not specified.
 - `targetTemperature` define the default target temperature (in &#8451;) when preconditioning the vehicle.
   Defaults to 22&#8451; if the value is not specified
+- `disableEV` is an optional value of `true` or `false`. Use this to disable EV-related functionality (such as battery and charger functions).
 
 Exposes:
 
@@ -47,10 +50,12 @@ Have a garage full of Jaguar Land Rovers? You can easily add all of
 them to HomeKit by creating a separate accessory for each one
 distinguished by their unique VIN numbers:
 
+```json
+
     {
       "accessories": [
         {
-          "accessory": "Jaguar Land Rover InControl",
+          "accessory": "Jaguar Land Rover Remote",
           "name": "I-PACE",
           "vin": "1AAAAA111AA111111",
           "username": "foo@bar.uk",
@@ -61,7 +66,7 @@ distinguished by their unique VIN numbers:
           "targetTemperature": 21
         },
         {
-          "accessory": "Jaguar Land Rover InControl",
+          "accessory": "Jaguar Land Rover Remote",
           "name": "Range Rover",
           "vin": "2BBBBB222BB22222",
           "username": "foo@bar.uk",
@@ -73,19 +78,21 @@ distinguished by their unique VIN numbers:
         }
       ]
     }
+  ```
 
 If you use the example above, you would gain Siri commands like:
 
 - _"Open the I-PACE"_ (unlock the **I-PACE**)
 - _"Open the Range Rover"_ (unlock the **Range Rover**)
 - _"Turn on the I-PACE Preconditioning"_ (pre-condition **on the I-PACE**)
+- _"Heat the Range Rover to 21 degrees"_ (pre-condition **on the Range Rover**)
 
 ## Development
 
 You can run Rollup in watch mode to automatically transpile code as you write it:
 
 ```sh
-  npm run dev
+  yarn dev
 ```
 
 ## Acknowledgements

@@ -1,16 +1,10 @@
-import { InControlService } from "../util/incontrol";
+import { HAP } from "homebridge"
+import { JaguarLandRoverRemoteApi } from "../util/remote"
 
 export abstract class HomeKitService {
-  protected readonly Characteristic: any;
-  protected readonly incontrol: InControlService;
-  protected readonly log: Function;
-  protected service: any;
+  protected service: any
 
-  constructor(log: Function, incontrol: InControlService, Characteristic: any) {
-    this.log = log;
-    this.incontrol = incontrol;
-    this.Characteristic = Characteristic;
-  }
+  constructor(protected log: Function, protected jlrRemoteApi: JaguarLandRoverRemoteApi, protected hap: HAP) { }
 
-  getService = () => this.service;
+  getService = () => this.service
 }
